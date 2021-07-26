@@ -3,7 +3,7 @@ import {Item} from "./interfaces";
 
 
 export function loadOptions(searchTerm:string = ""):Promise<Item[]> {
-
+    console.log(searchTerm);
     if (searchTerm) {
         return axios
             .get(`https://restcountries.eu/rest/v2/name/${searchTerm}`)

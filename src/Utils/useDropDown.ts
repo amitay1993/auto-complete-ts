@@ -4,7 +4,7 @@ import {Dispatcher, fetchCountries, Item} from "./interfaces";
 import {useFetch} from "./useFetch";
 
 
-export function useDropDown( selectedItem: Object, setSelectedItem: Dispatcher<Item|null>,loadOptions?: fetchCountries,options?:Array<Item>) {
+export function useDropDown( selectedItem: Item|null, setSelectedItem: Dispatcher<Item|null>,loadOptions?: fetchCountries,options?:Array<Item>) {
     const initialState = {
         isOpen: false,
         highlightedItemIndex: 0,
@@ -12,8 +12,9 @@ export function useDropDown( selectedItem: Object, setSelectedItem: Dispatcher<I
     };
 
     const [state, setState] = useState(initialState);
-    const { countries, isLoading } = useFetch(
+    const { countries, isLoading,setCountries } = useFetch(
         state.searchText,
+        state.isOpen,
         selectedItem ,
         loadOptions,
     );
@@ -35,7 +36,8 @@ export function useDropDown( selectedItem: Object, setSelectedItem: Dispatcher<I
     };
 
     const click = () => {
-        if (state.isOpen) return;
+        if (state.isOpen) return
+        setCountries(prevState => []);
         setState((prevState) => {
             return { ...prevState, isOpen: true };
         });
@@ -89,7 +91,7 @@ export function useDropDown( selectedItem: Object, setSelectedItem: Dispatcher<I
         function handleClickOutside(event: MouseEvent):void {
             if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
                 // setIsOpen(false);
-                console.log(state);
+                // console.log(state);
                 //TODO: setState(...state,isOpen:false) causing changes to other data from the state.
                 setState((state) => ({ ...state, isOpen: false }));
             }
@@ -103,7 +105,8 @@ export function useDropDown( selectedItem: Object, setSelectedItem: Dispatcher<I
     }, [inputRef]);
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && !selectedItem) {
+            console.log("test");
             setState((prevState) => {
                 return {
                     ...prevState,

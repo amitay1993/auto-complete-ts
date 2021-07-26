@@ -1,5 +1,5 @@
-import React, {ReactElement} from 'react';
-import {Dispatcher, fetchCountries, Item} from "../Utils/interfaces";
+import React from 'react';
+import {Item} from "../Utils/interfaces";
 import {Props} from "./DropDown";
 import {useDropDown} from "../Utils/useDropDown";
 import styled from "styled-components";
@@ -8,7 +8,6 @@ import {Container,CountryList, CountryListItem, Search} from "../Styles/DrowDown
 
 
 export const AsyncDropDown: React.FC<Props> =  ({loadOptions,value:selectedItem,onChange:setSelectedItem,renderInput}:Props) => {
-    console.log(setSelectedItem)
     const {
         state: { isOpen, highlightedItemIndex },
         inputProps,

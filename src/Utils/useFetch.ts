@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash/debounce";
-import isEmpty from "lodash/isEmpty"
+
 import {fetchCountries, Item} from "./interfaces";
 
-export function useFetch(searchTerm:string = "", isSelectedCountry:Object,loadOptions?:fetchCountries,) {
+
+export function useFetch(searchTerm:string = "",isDropdownOpen:boolean, selectedCountry:Item|null,loadOptions?:fetchCountries,) {
     const [countries, setCountries] = useState<Item[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    console.log(selectedCountry,isDropdownOpen);
 
     async function fetchData(newValue:string) {
         try {
@@ -30,11 +33,20 @@ export function useFetch(searchTerm:string = "", isSelectedCountry:Object,loadOp
         []
     );
 
+
     useEffect(() => {
-        if (!isEmpty(isSelectedCountry)) return;
+        if (selectedCountry ) return;
+        console.log("loading")
         setIsLoading(true);
         debouncedValue(searchTerm);
-    }, [debouncedValue, isSelectedCountry, searchTerm]);
+    }, [debouncedValue, selectedCountry, searchTerm]);
 
-    return { countries, isLoading };
+    useEffect(()=>{
+        if(isDropdownOpen && selectedCountry){
+            setIsLoading(true);
+            debouncedValue("");
+        }
+    },[isDropdownOpen])
+
+    return { countries, isLoading,setCountries};
 }
