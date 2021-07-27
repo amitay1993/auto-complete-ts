@@ -8,7 +8,7 @@ export function useFetch(searchTerm:string = "",isDropdownOpen:boolean, selected
     const [countries, setCountries] = useState<Item[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log(selectedCountry,isDropdownOpen);
+
 
     async function fetchData(newValue:string) {
         try {
@@ -16,6 +16,8 @@ export function useFetch(searchTerm:string = "",isDropdownOpen:boolean, selected
                 const results:Array<Item> = await loadOptions(newValue);
                 setCountries(results);
                 setIsLoading(false);
+            }else{
+                return;
             }
         } catch (error) {
             const { status: errorCode } = error.response;
@@ -36,7 +38,6 @@ export function useFetch(searchTerm:string = "",isDropdownOpen:boolean, selected
 
     useEffect(() => {
         if (selectedCountry ) return;
-        console.log("loading")
         setIsLoading(true);
         debouncedValue(searchTerm);
     }, [debouncedValue, selectedCountry, searchTerm]);

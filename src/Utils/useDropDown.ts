@@ -4,7 +4,14 @@ import {Dispatcher, fetchCountries, Item} from "./interfaces";
 import {useFetch} from "./useFetch";
 
 
-export function useDropDown( selectedItem: Item|null, setSelectedItem: Dispatcher<Item|null>,loadOptions?: fetchCountries,options?:Array<Item>) {
+interface DropdownProps{
+    selectedItem: Item|null,
+    setSelectedItem: Dispatcher<Item|null>,
+    loadOptions?: fetchCountries,
+    options?:Array<Item>
+}
+
+export function useDropDown(props:DropdownProps) {
     const initialState = {
         isOpen: false,
         highlightedItemIndex: 0,
@@ -15,15 +22,15 @@ export function useDropDown( selectedItem: Item|null, setSelectedItem: Dispatche
     const { countries, isLoading,setCountries } = useFetch(
         state.searchText,
         state.isOpen,
-        selectedItem ,
-        loadOptions,
+        props.selectedItem ,
+        props.loadOptions,
     );
     const inputRef  =  useRef<HTMLInputElement>(null);
 
 
     const onChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
         const input = event.target.value;
-        setSelectedItem(null);
+        props.setSelectedItem(null);
         // queue = [setState, setState, setState]
         // setState((state) => ({ ...state, }))
         setState((prevState) => {
@@ -44,7 +51,7 @@ export function useDropDown( selectedItem: Item|null, setSelectedItem: Dispatche
     };
 
     const select = (country:Item) => {
-        setSelectedItem(country);
+        props.setSelectedItem(country);
         setState((prevState) => {
             return {
                 ...state,
@@ -105,7 +112,7 @@ export function useDropDown( selectedItem: Item|null, setSelectedItem: Dispatche
     }, [inputRef]);
 
     useEffect(() => {
-        if (!isLoading && !selectedItem) {
+        if (!isLoading && !props.selectedItem) {
             console.log("test");
             setState((prevState) => {
                 return {
