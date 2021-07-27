@@ -13,6 +13,7 @@ export const SyncDropDown: React.FC<Props> = ({
   value: selectedItem,
   options,
   onChange: setSelectedItem,
+  renderInput,
 }: Props) => {
   const {
     state: { isOpen, highlightedItemIndex, searchText },
@@ -67,8 +68,8 @@ export const SyncDropDown: React.FC<Props> = ({
   return (
     <Search ref={inputRef}>
       <label htmlFor="countriesChoice">Choose a Country:</label>
-      {selectedItem && <img src={selectedItem.flag} alt={"Missing pic"} />}
-      <input {...inputProps} />
+      {/*{selectedItem && <img src={selectedItem.flag} alt={"Missing pic"} />}*/}
+      {renderInput(inputProps, selectedItem as Item)}
       {isOpen && <CountryList>{showCountries()}</CountryList>}
     </Search>
   );

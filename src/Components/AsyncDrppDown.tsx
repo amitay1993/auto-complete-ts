@@ -47,8 +47,8 @@ export const AsyncDropDown: React.FC<Props> = ({
     <SearchWithLoadingSpinner>
       <Search ref={inputRef}>
         <label htmlFor="countriesChoice">Choose a Country:</label>
-        {selectedItem && <img src={selectedItem.flag} alt={"Missing Pic"} />}
-        {renderInput(inputProps)}
+        {/*{selectedItem && <img src={selectedItem.flag} alt={"Missing Pic"} />}*/}
+        {renderInput(inputProps, selectedItem as Item)}
         {isOpen && <CountryList>{showCountries()}</CountryList>}
       </Search>
       {isLoading && <div className="loader">Loading...</div>}

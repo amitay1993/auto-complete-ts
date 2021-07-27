@@ -12,8 +12,16 @@ function App() {
         options={data}
         onChange={setSelectedItem}
         value={selectedItem}
-        renderInput={(inputProps: HTMLAttributes<HTMLInputElement>) => (
-          <input {...inputProps} />
+        renderInput={(
+          inputProps: HTMLAttributes<HTMLInputElement>,
+          selectedItem: Item
+        ) => (
+          <>
+            {selectedItem && (
+              <img src={selectedItem.flag} alt={"Missing Pic"} />
+            )}
+            <input {...inputProps} />
+          </>
         )}
       />
     </div>
