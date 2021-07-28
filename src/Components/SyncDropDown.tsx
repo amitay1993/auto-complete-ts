@@ -1,5 +1,5 @@
 import React from "react";
-import { Props } from "./DropDown";
+import { Props, SyncDropdownProps } from "./DropDown";
 import { useDropDown } from "../Utils/useDropDown";
 import {
   Container,
@@ -9,12 +9,12 @@ import {
 } from "../Styles/DrowDownStyles";
 import { Item } from "../Utils/interfaces";
 
-export const SyncDropDown: React.FC<Props> = ({
+export const SyncDropDown: React.FC<SyncDropdownProps> = ({
   value: selectedItem,
   options,
   onChange: setSelectedItem,
   renderInput,
-}: Props) => {
+}) => {
   const {
     state: { isOpen, highlightedItemIndex, searchText },
     inputProps,

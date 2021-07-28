@@ -6,23 +6,23 @@ import { data } from "./MockData/countriesMock";
 
 function App() {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
   return (
     <div>
       <DropDown
         options={data}
         onChange={setSelectedItem}
         value={selectedItem}
-        renderInput={(
-          inputProps: HTMLAttributes<HTMLInputElement>,
-          selectedItem: Item
-        ) => (
-          <>
-            {selectedItem && (
-              <img src={selectedItem.flag} alt={"Missing Pic"} />
-            )}
-            <input {...inputProps} />
-          </>
-        )}
+        renderInput={(inputProps, selectedItem) => {
+          return (
+            <>
+              {selectedItem && (
+                <img src={selectedItem.flag} alt={"Missing Pic"} />
+              )}
+              <input {...inputProps} />
+            </>
+          );
+        }}
       />
     </div>
   );

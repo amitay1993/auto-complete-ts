@@ -1,6 +1,6 @@
 import React from "react";
 import { Item } from "../Utils/interfaces";
-import { Props } from "./DropDown";
+import { AsyncDropdownOptions } from "./DropDown";
 import { useDropDown } from "../Utils/useDropDown";
 import styled from "styled-components";
 import {
@@ -10,12 +10,12 @@ import {
   Search,
 } from "../Styles/DrowDownStyles";
 
-export const AsyncDropDown: React.FC<Props> = ({
+export const AsyncDropDown: React.FC<AsyncDropdownOptions> = ({
   loadOptions,
   value: selectedItem,
   onChange: setSelectedItem,
   renderInput,
-}: Props) => {
+}) => {
   const {
     state: { isOpen, highlightedItemIndex },
     inputProps,
@@ -31,7 +31,7 @@ export const AsyncDropDown: React.FC<Props> = ({
         <CountryListItem
           isFocused={idx === highlightedItemIndex}
           isSelected={selectedItem?.name === country.name}
-          onClick={() => select(country as Item)}
+          onClick={() => select(country)}
           key={country.name}
         >
           <Container>
@@ -48,7 +48,7 @@ export const AsyncDropDown: React.FC<Props> = ({
       <Search ref={inputRef}>
         <label htmlFor="countriesChoice">Choose a Country:</label>
         {/*{selectedItem && <img src={selectedItem.flag} alt={"Missing Pic"} />}*/}
-        {renderInput(inputProps, selectedItem as Item)}
+        {renderInput(inputProps, selectedItem)}
         {isOpen && <CountryList>{showCountries()}</CountryList>}
       </Search>
       {isLoading && <div className="loader">Loading...</div>}
